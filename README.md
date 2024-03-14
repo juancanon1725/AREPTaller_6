@@ -24,12 +24,15 @@ Juan Pablo Poveda Cañon
 code blocks for commands
 ```
 
-## Help
+## Arquitectura
 
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
+Se desarrolló una aplicación conforme a la arquitectura sugerida y se desplegó en AWS mediante el uso de EC2 y Docker. La estructura de la aplicación comprende los siguientes elementos:
+
+* Servicio de MongoDB: Una instancia de MongoDB que se ejecuta en un contenedor Docker dentro de una máquina virtual EC2.
+
+* LogService: Un servicio REST que recibe cadenas de texto, las guarda en la base de datos y devuelve un objeto JSON con las últimas 10 cadenas almacenadas junto con la fecha de registro.
+
+* Aplicación Web LogRoundRobin: Esta aplicación web incluye un cliente que permite a los usuarios introducir mensajes. Cada mensaje enviado se dirige al servicio REST, el cual emplea un algoritmo de balanceo de carga Round Robin. Este servicio distribuye el procesamiento del mensaje y la respuesta a tres instancias del servicio LogService.
 
 ## Authors
 

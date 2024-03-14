@@ -1,0 +1,39 @@
+version: '3'
+services:
+  web:
+    roundrobin-container:
+      image: juancanon1725/logroundrobin:latest
+      ports:
+        - "35000:46000"
+      container_name: roundrobin-container
+
+      logservices-1:
+        image: juancanon1725/logservice:latest
+        ports:
+          - "35001:46001"
+        container_name: logservices-1
+
+      logservices-2:
+        image: juancanon1725/logservice:latest
+        ports:
+          - "35002:46001"
+        container_name: logservices-2
+
+      logservices-3:
+        image: juancanon1725/logservice:latest
+        ports:
+          - "35003:46001"
+        container_name: logservices-3
+  db:
+    image: mongo:3.6.1
+    container_name: db
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+    ports:
+      - 27017:27017
+    command: mongod
+
+volumes:
+  mongodb:
+  mongodb_config:

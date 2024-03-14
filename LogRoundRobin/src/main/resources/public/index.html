@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente de Logs</title>
+</head>
+<body>
+<h1>Laboratorio 6 AREP</h1>
+<label for="logInput">Ingrese el log:</label>
+<input type="text" id="logInput" placeholder="Escriba...">
+<button id="fetchButton">Ok</button>
+<h2>Logs enviados:</h2>
+<ul id="logList"></ul>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const logInput = document.getElementById("logInput");
+        const fetchButton = document.getElementById("fetchButton");
+        const logList = document.getElementById("logList");
+
+        fetchButton.addEventListener("click", () => {
+            const logValue = logInput.value;
+
+            if (logValue !== "") {
+                const url = `/roundrobin?log=${encodeURIComponent(logValue)}`;
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        logList.innerHTML = "";
+                        const logEntries = data.split(", ");
+                        logEntries.forEach(logEntry => {
+                            const cleanLogEntry = logEntry.replace(/\[|\]/g, "");
+                            const listItem = document.createElement("li");
+                            listItem.textContent = cleanLogEntry;
+                            logList.appendChild(listItem);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Error generado:", error);
+                    });
+            } else {
+                alert("Ingrese un log válido.");
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -33,7 +33,7 @@ public class HttpRemoteCaller {
         StringBuffer response = new StringBuffer();
 
 
-        if (responseCode == HttpURLConnection.HTTP_OK) { // success
+        if (responseCode == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;
@@ -43,7 +43,6 @@ public class HttpRemoteCaller {
             }
             in.close();
 
-            // print result
             System.out.println(response.toString());
         } else {
             System.out.println("GET request not worked");

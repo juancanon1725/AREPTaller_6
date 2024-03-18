@@ -16,7 +16,7 @@ public class LogService {
 
     private  static int current_index = 0;
 
-    private static String[] backServices = {"http://logservices-1:6001/logs?log=","http://logservices-2:6001/logs?log=","http://logservices-3:6001/logs?log="};
+    private static String[] backServices = {"http://logservices1:35001/logs?log=","http://logservices2:35002/logs?log=","http://logservices3:35003/logs?log="};
     public static List<String> getLogs(String message) throws IOException, MalformedURLException, ProtocolException {
         String GET_URL = roundRobin() + message;
         URL obj = new URL(GET_URL);
@@ -49,14 +49,10 @@ public class LogService {
 
         return null;
     }
-
-
     private static String roundRobin(){
         current_index = (current_index + 1) % backServices.length;
         System.out.println( "Server : "  + backServices[current_index]);
         return backServices[current_index];
-
-
     }
 
 }
